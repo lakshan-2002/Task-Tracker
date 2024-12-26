@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CommonResponse {
 
+
     private String StatusDescription;
     private String timeStamp;
 
