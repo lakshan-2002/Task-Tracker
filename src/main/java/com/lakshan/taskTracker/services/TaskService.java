@@ -18,7 +18,6 @@ public class TaskService {
     @Autowired
     private TaskRepository taskRepository;
 
-    //    @Transactional
     public CommonResponse addTask(TaskRequest taskRequest) throws Exception {
         Task task = new Task();
         CommonResponse commonResponse = new CommonResponse();
