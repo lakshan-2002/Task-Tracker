@@ -17,6 +17,7 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
+
     // add a task into database
     @PostMapping("/addTask")
     public ResponseEntity<CommonResponse> addTask(@RequestBody TaskRequest taskRequest) {
