@@ -18,6 +18,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+
     @PostMapping("/addUser")
     public ResponseEntity<CommonResponse> addUser(@RequestBody UserRequest userRequest) {
 
@@ -26,11 +27,20 @@ public class UserController {
             commonResponse = userService.addUser(userRequest);
         } catch (Exception e) {
             commonResponse.setPayLoad(userRequest);
-            commonResponse.setStatusDescription("General Error");
-            return ResponseEntity.internalServerError().body(commonResponse);
+            commonResponse.setStatusDescription("Error adding user");
+            return ResponseEntity.status(500).body(commonResponse);
         }
 
         return ResponseEntity.ok().body(commonResponse);
+    }
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody UserRequest userRequest){
+        User user = userService.getUserByUserName(userRequest.getUserName());
+
+        if (user != null && user.getPassword().equals(userRequest.getPassword()))
+            return ResponseEntity.ok(user);
+        else
+            return ResponseEntity.status(401).body("Invalid username or password");
     }
 
     @GetMapping("/getAllUsers")

@@ -18,6 +18,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+
     public CommonResponse addUser(UserRequest userRequest) throws Exception {
 
         User user = new User();
@@ -47,6 +48,9 @@ public class UserService {
         }
 
         return commonResponse;
+    }
+    public User getUserByUserName(String userName){
+        return userRepository.findByUserName(userName);
     }
 
     public User getUserById(long userId) {
