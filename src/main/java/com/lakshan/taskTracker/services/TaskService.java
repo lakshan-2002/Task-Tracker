@@ -68,7 +68,6 @@ public class TaskService {
         return taskRepository.findByUserId(userId);
     }
 
-    //    @Transactional
     public CommonResponse updateTask(TaskRequest taskRequest) throws Exception {
         Task task = new Task();
         CommonResponse commonResponse = new CommonResponse();
