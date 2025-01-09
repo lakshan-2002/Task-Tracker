@@ -20,7 +20,6 @@ public class UserService {
 
 
     public CommonResponse addUser(UserRequest userRequest) throws Exception {
-
         User user = new User();
         CommonResponse commonResponse = new CommonResponse();
 
