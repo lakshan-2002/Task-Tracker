@@ -18,7 +18,6 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-
     public CommonResponse addUser(UserRequest userRequest) throws Exception {
         User user = new User();
         CommonResponse commonResponse = new CommonResponse();
@@ -48,8 +47,8 @@ public class UserService {
 
         return commonResponse;
     }
-    public User getUserByUserName(String userName){
-        return userRepository.findByUserName(userName);
+    public User getUserByEmail(String email){
+        return userRepository.findByEmail(email);
     }
 
     public User getUserById(long userId) {
@@ -101,4 +100,6 @@ public class UserService {
         User existingUser = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
         userRepository.deleteById(userId);
     }
+
+
 }
