@@ -5,30 +5,42 @@
     padding: 0;
 }
 
-/* Body styling */
+/* Body Styling */
 body {
+    position: relative; /* Ensure body is positioned correctly */
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: #000; /* Add a background color for contrast */
+}
+
+.login-page {
+    height: 100vh;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background: url('C:/Users/LAKSHAN/Pictures/Saved Pictures/task4.jpg') no-repeat center center fixed;
-    background-size: cover;
     position: relative;
 }
 
-body::before {
+/* Welcome Text Animation */
+body.show-welcome::before {
     content: 'Welcome to the Task Hub';
     position: absolute;
-    top: 12%;
+    top: 10%;
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 3em;
-    color: lightcyan;
+    color: #00A6FF;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
     animation: typing 4s steps(30, end);
+    z-index: 10;
+ 
 }
 
 @keyframes typing {
@@ -39,7 +51,13 @@ body::before {
         width: 100%;
     }
 }
-    
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
 
 /* Login Container */
 .login-container {
@@ -50,11 +68,27 @@ body::before {
     height: 100%;
 }
 
+.login-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('assets/images/nature image.jpg') no-repeat center center fixed;
+    background-size: cover;
+    filter: blur(15px); /* Adjust blur intensity */
+    z-index: -1; /* Push it behind the content */
+}
+
 /* Login Box */
 .login-box {
     background: white;
-    padding: 40px;
+    padding: 30px;
     width: 400px;
+    height: auto;
+    min-height: 200px;
+    margin-top: 70px;
     border-radius: 5px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     text-align: center;
@@ -78,6 +112,7 @@ h2 {
     display: block;
     margin-bottom: 5px;
     font-size: 14px;
+    font-weight: normal;
     color: #333;
 }
 
@@ -104,8 +139,18 @@ h2 {
 }
 
 .options label {
+    display: flex;
+    align-items: center;  /* Ensures checkbox and text align */
+    gap: 5px;  /* Adds spacing between checkbox and label text */
+    font-weight: normal;
     font-size: 14px;
     color: #333;
+}
+
+.options input[type="checkbox"] {
+    width: 16px;  /* Ensures checkbox has a proper width */
+    height: 16px;
+    cursor: pointer;
 }
 
 .options .forgot-password {
@@ -131,7 +176,7 @@ button {
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-button:hover {
+.login-box button:hover {
     background-color: #1F51FF;
     transform: translateY(-2px);
 }
