@@ -14,9 +14,8 @@ Coded by www.creative-tim.com
 */
 import React, { useState, useEffect, useMemo } from "react";
 
-import { useLocation } from "react-router-dom";
 // react-router components
-import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 
 // @mui material components
 import { ThemeProvider } from "@mui/material/styles";
