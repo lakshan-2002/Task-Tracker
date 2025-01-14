@@ -14,10 +14,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-
     @Autowired
     private UserService userService;
-
 
     @PostMapping("/addUser")
     public ResponseEntity<CommonResponse> addUser(@RequestBody UserRequest userRequest) {
