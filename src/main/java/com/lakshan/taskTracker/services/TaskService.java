@@ -40,6 +40,7 @@ public class TaskService {
             taskResponse.setStatus(task1.getStatus());
             taskResponse.setPriority(task1.getPriority());
             taskResponse.setDueDate(task1.getDueDate());
+            taskResponse.setUser(task1.getUser());
 
             commonResponse.setPayLoad(taskResponse);
             commonResponse.setStatusDescription("SUCCESSFULLY ADDED...");

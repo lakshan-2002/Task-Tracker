@@ -78,7 +78,7 @@ public class TaskResponse implements Serializable {
                 ", status='" + status + '\'' +
                 ", priority='" + priority + '\'' +
                 ", dueDate=" + dueDate + '\'' +
-                ", user=" + user +
+                ", user=" + (user != null ? user.toString() : "No user") +
                 '}';
     }
 }
