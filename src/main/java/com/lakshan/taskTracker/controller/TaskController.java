@@ -17,7 +17,6 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
-
     // add a task into database
     @PostMapping("/addTask")
     @CrossOrigin(origins = "http://localhost:3000")

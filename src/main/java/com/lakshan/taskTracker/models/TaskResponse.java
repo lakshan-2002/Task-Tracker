@@ -19,6 +19,7 @@ public class TaskResponse implements Serializable {
     private String priority;
 
     private LocalDate dueDate;
+
     private User user;
 
     public String getTitle() {
@@ -61,12 +62,12 @@ public class TaskResponse implements Serializable {
         this.dueDate = dueDate;
     }
 
-    public User getUser() {
-        return user;
-    }
-
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     @Override
