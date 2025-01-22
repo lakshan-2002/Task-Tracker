@@ -20,6 +20,7 @@ public class TaskController {
 
     // add a task into database
     @PostMapping("/addTask")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<CommonResponse> addTask(@RequestBody TaskRequest taskRequest) {
 
         CommonResponse commonResponse = new CommonResponse();
