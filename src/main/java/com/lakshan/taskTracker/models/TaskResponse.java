@@ -1,5 +1,6 @@
 package com.lakshan.taskTracker.models;
 
+import com.lakshan.taskTracker.entity.User;
 import lombok.*;
 
 import java.io.Serializable;
@@ -18,6 +19,8 @@ public class TaskResponse implements Serializable {
     private String priority;
 
     private LocalDate dueDate;
+
+    private User user;
 
     public String getTitle() {
         return title;
@@ -59,6 +62,14 @@ public class TaskResponse implements Serializable {
         this.dueDate = dueDate;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
     @Override
     public String toString() {
         return "TaskResponse{" +
@@ -66,7 +77,8 @@ public class TaskResponse implements Serializable {
                 ", description='" + description + '\'' +
                 ", status='" + status + '\'' +
                 ", priority='" + priority + '\'' +
-                ", dueDate=" + dueDate +
+                ", dueDate=" + dueDate + '\'' +
+                ", user=" + (user != null ? user.toString() : "No user") +
                 '}';
     }
 }
