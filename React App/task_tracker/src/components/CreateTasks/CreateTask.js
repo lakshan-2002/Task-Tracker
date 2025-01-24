@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./CreateTask.css"; // Create this file for styling the form
 
-const CreateTask = ({ postData }) => {
+const CreateTask = ({ addTask }) => {
   const [taskData, setTaskData] = useState({
     title: "",
     description: "",
@@ -11,20 +11,45 @@ const CreateTask = ({ postData }) => {
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;ss
+    const { name, value } = e.target;
     setTaskData({ ...taskData, [name]: value });
   };
 
-  // if (!postData) {
-  //   console.error("postData function is not defined or passed as a prop!");
-  //   return <p>Error: postData function is missing</p>;
-  // }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Task Submitted:", taskData);
-    await postData(taskData);
     // Here, you can call an API to send task data to the backend
+
+  try {
+      const user = JSON.parse(localStorage.getItem("user")); // Safely parse user from localStorage
+      if (!user || !user.id) {
+          throw new Error("User not found. Please log in again.");
+      }
+  
+      // Add the userId to taskData
+      const taskWithUser = {
+          ...taskData,
+          user // Add the required userId
+      };
+  
+      // Pass taskWithUser to addTask
+      await addTask(taskWithUser);
+  
+      // Reset task data on success
+      setTaskData({
+          title: "",
+          description: "",
+          status: "Pending",
+          priority: "Medium",
+          dueDate: "",
+      });
+  
+      console.log("✅ Task submitted successfully");
+    } catch (error) {
+      console.error("❌ Error submitting task:", error);
+    }
+  
   };
 
   return (

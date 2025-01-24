@@ -64,8 +64,9 @@ import Profile from "layouts/profile";
 import Logout from "layouts/logout";
 
 import PrivateRoutes from "components/PrivateRoutes/PrivateRoute";
-import ParentComponent from "components/ParentComponent";
+import { id } from "date-fns/locale";
 
+const baseurl = "http://localhost:8080";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -148,7 +149,7 @@ export default function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://localhost:8080/task/getAllTasks");
+        const response = await fetch(`${baseurl}/task/getAllTasks`);
         if (!response.ok) {
           const errorData = await response.json();
           throw new Error(errorData.message || `Error: ${response.statusText}`);
@@ -164,20 +165,27 @@ export default function App() {
   }, []);
 
    //POST data to API
-  const postData = async (newData) => {
+  const addTask = async (newData) => {
     try {
-      const response = await fetch("https://localhost:8080/task/addTask", {
+      const user = localStorage.getItem("user"); // Or wherever you're storing it
+      console.log("Stored user:", user);
+
+      const response = await fetch(`${baseurl}/task/addTask`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(newData),
       });
+     
       const result = await response.json();
+      console.log("Response from backend: ", JSON.stringify(result, null, 2));
+      
+
       if (!response.ok) {
         throw new Error(result.message || `Error: ${response.statusText}`);
       }
-      setSnackbarMessage(result.message);
+      setSnackbarMessage(result.statusDescription || "Task added successfully!");
       setSnackbarSeverity("success");
       setOpenSnackbar(true);
     } catch (error) {
@@ -188,9 +196,9 @@ export default function App() {
   };
 
   // PUT data to API
-  const putData = async (newData) => {
+  const updateTask = async (newData) => {
     try {
-      const response = await fetch("https://localhost:8080/task/updateTask", {
+      const response = await fetch(`${baseurl}/task/updateTask`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -212,9 +220,9 @@ export default function App() {
   };
 
   // DELETE data from API
-  const deleteData = async (newData) => {
+  const deleteTask = async (newData) => {
     try {
-      const response = await fetch("https://localhost:8080/task/deleteTask/${id}", {
+      const response = await fetch(`${baseurl}/task/deleteTask/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -244,6 +252,12 @@ export default function App() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
   }, [pathname]);
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") return;
+    setOpenSnackbar(false);
+  };
+
 
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {
@@ -287,6 +301,17 @@ export default function App() {
       <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
         <CssBaseline />
 
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={3000}
+          onClose={handleSnackbarClose}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        >
+          <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: "100%" }}>
+            {snackbarMessage}
+          </Alert>
+        </Snackbar>
+
         {/* ✅ Show sidebar only if user is authenticated */}
         {isAuthenticated && layout === "dashboard" && (
           <>
@@ -304,7 +329,7 @@ export default function App() {
         )}
 
         {layout === "vr" && <Configurator />}
-        <ParentComponent></ParentComponent>
+       
 
         <Routes>
             <Route path="/" element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />} />
@@ -313,7 +338,7 @@ export default function App() {
             <Route path="/signup" element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <Signup />} />
 
             {/* Protected Routes */}
-            <Route path="/create-task" element={<PrivateRoutes element={<CreateTask />} />} />
+            <Route path="/create-task" element={<PrivateRoutes element={<CreateTask addTask = {addTask}/>} />} />
             <Route path="/tasks" element={<PrivateRoutes element={<AllTasks />} />} />
             <Route path="/inprogress-tasks" element={<PrivateRoutes element={<InprogressTasks />} />} />
             <Route path="/pending-tasks" element={<PrivateRoutes element={<PendingTasks />} />} />
@@ -330,6 +355,17 @@ export default function App() {
   ) : (
     <ThemeProvider theme={darkMode ? themeDark : theme}>
       <CssBaseline />
+
+      <Snackbar
+          open={openSnackbar}
+          autoHideDuration={3000}
+          onClose={handleSnackbarClose}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        >
+          <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: "100%" }}>
+            {snackbarMessage}
+          </Alert>
+        </Snackbar>
 
       {/* ✅ Show sidebar only if user is authenticated */}
       {isAuthenticated && layout === "dashboard" && (
@@ -368,7 +404,7 @@ export default function App() {
         <Route path="/signup" element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <Signup />} />
 
         {/* Protected Routes */}
-        <Route path="/create-task" element={<PrivateRoutes element={<CreateTask />} />} />
+        <Route path="/create-task" element={<PrivateRoutes element={<CreateTask addTask = {addTask}/>} />} />
         <Route path="/tasks" element={<PrivateRoutes element={<AllTasks />} />} />
         <Route path="/inprogress-tasks" element={<PrivateRoutes element={<InprogressTasks />} />} />
         <Route path="/pending-tasks" element={<PrivateRoutes element={<PendingTasks />} />} />
