@@ -59,6 +59,8 @@ const Login = () => {
             }
 
             localStorage.setItem("user", JSON.stringify(data));
+            console.log("User logged in:", data);
+            
             alert("✅ Login successful!");
             navigate("/dashboard", {replace: true});
         } catch (error) {

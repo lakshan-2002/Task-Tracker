@@ -5,7 +5,7 @@ const ParentComponent = () => {
   // Add Task (POST)
   const postData = async (taskData) => {
     try {
-      const response = await fetch("https://localhost:8080/task/addTask", {
+      const response = await fetch("http://localhost:8080/task/addTask", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -26,7 +26,7 @@ const ParentComponent = () => {
   // Update Task (PUT)
   const putData = async (taskData) => {
     try {
-      const response = await fetch("https://localhost:8080/task/updateTask", {
+      const response = await fetch("http://localhost:8080/task/updateTask", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -47,7 +47,7 @@ const ParentComponent = () => {
   // Delete Task (DELETE)
   const deleteData = async (taskId) => {
     try {
-      const response = await fetch(`https://localhost:8080/task/deleteTask/${taskId}`, {
+      const response = await fetch(`http://localhost:8080/task/deleteTask/${taskId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

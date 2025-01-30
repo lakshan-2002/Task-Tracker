@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import "./Tasks.css";
 
+const baseurl = "http://localhost:8080";
+
 function AllTasks() {
     const [filter, setFilter] = useState("All");
     const [editTask, setEditTask] = useState(null); // Holds the task being edited
@@ -23,7 +25,7 @@ function AllTasks() {
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const response = await fetch("https://localhost:8080/task/getAllTasks");
+          const response = await fetch(`${baseurl}/task/getAllTasks`);
           if (!response.ok) {
             throw new Error("Failed to fetch tasks");
           }
@@ -54,7 +56,7 @@ function AllTasks() {
 
   const handleSave = async () => {
     try {
-      const response = await fetch(`https://localhost:8080/task/updateTask/${editTask.id}`, {
+      const response = await fetch(`${baseurl}/task/updateTask`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -76,7 +78,7 @@ function AllTasks() {
 
   const handleDelete = async (taskId) => {
     try {
-      const response = await fetch(`https://localhost:8080/task/deleteTask/${taskId}`, {
+      const response = await fetch(`${baseurl}/task/deleteTask/${taskId}`, {
         method: "DELETE",
       });
       const result = await response.json();
