@@ -41,6 +41,9 @@ import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "co
 import brandWhite from "assets/images/Task Hub.png";
 import brandDark from "assets/images/logo-ct-dark.png";
 
+// Import the Dashboard component
+import Dashboard from "layouts/dashboard";
+
 import Login from "components/Login/login";
 import Signup from "components/Login/signup";
 
@@ -64,7 +67,6 @@ import Profile from "layouts/profile";
 import Logout from "layouts/logout";
 
 import PrivateRoutes from "components/PrivateRoutes/PrivateRoute";
-import { id } from "date-fns/locale";
 
 const baseurl = "http://localhost:8080";
 
@@ -89,6 +91,7 @@ export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("user"));
   const navigate = useNavigate();
   const location = useLocation();
+  const [tasks, setTasks] = useState([]);
 
   // To handle the api logic
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -155,7 +158,8 @@ export default function App() {
           throw new Error(errorData.message || `Error: ${response.statusText}`);
         }
         const result = await response.json();
-        setData(result);
+        //setData(result);
+        setTasks(result);
       } catch (error) {
          setError(error.message);
       }
@@ -185,7 +189,7 @@ export default function App() {
       if (!response.ok) {
         throw new Error(result.message || `Error: ${response.statusText}`);
       }
-      setSnackbarMessage(result.statusDescription || "Task added successfully!");
+      setSnackbarMessage(result.statusDescription);
       setSnackbarSeverity("success");
       setOpenSnackbar(true);
     } catch (error) {
@@ -220,20 +224,20 @@ export default function App() {
   };
 
   // DELETE data from API
-  const deleteTask = async (newData) => {
+  const deleteTask = async (taskId) => {
     try {
-      const response = await fetch(`${baseurl}/task/deleteTask/${id}`, {
+      const response = await fetch(`${baseurl}/task/${taskId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(newData),
+        
       });
-      const result = await response.json();
+
       if (!response.ok) {
         throw new Error(result.message || `Error: ${response.statusText}`);
       }
-      setSnackbarMessage(result.message);
+      setSnackbarMessage("Successfully deleted!");
       setSnackbarSeverity("success");
       setOpenSnackbar(true);
     } catch (error) {
@@ -296,6 +300,13 @@ export default function App() {
     </MDBox>
   );
 
+  const taskCounts = {
+    AllTasks: tasks.length,
+    InProgressTasks: tasks.filter((task) => task.status === "In Progress").length,
+    PendingTasks: tasks.filter((task) => task.status === "Pending").length,
+    CompletedTasks: tasks.filter((task) => task.status === "Completed").length,
+  };
+
   return direction === "rtl" ? (
     <CacheProvider value={rtlCache}>
       <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
@@ -332,6 +343,10 @@ export default function App() {
        
 
         <Routes>
+            {routes.map((route) => (
+              <Route key={route.key} path={route.route} element={<route.component {...taskCounts} />} />
+            ))}
+            <Route path="/" element={<Dashboard {...taskCounts} />} />        
             <Route path="/" element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />} />
 
             <Route path="/login" element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <Login />} />
@@ -339,10 +354,10 @@ export default function App() {
 
             {/* Protected Routes */}
             <Route path="/create-task" element={<PrivateRoutes element={<CreateTask addTask = {addTask}/>} />} />
-            <Route path="/tasks" element={<PrivateRoutes element={<AllTasks />} />} />
-            <Route path="/inprogress-tasks" element={<PrivateRoutes element={<InprogressTasks />} />} />
-            <Route path="/pending-tasks" element={<PrivateRoutes element={<PendingTasks />} />} />
-            <Route path="/completed-tasks" element={<PrivateRoutes element={<CompletedTasks />} />} />
+            <Route path="/tasks" element={<PrivateRoutes element={<AllTasks deleteTask = {deleteTask}/>} />} />
+            <Route path="/inprogress-tasks" element={<PrivateRoutes element={<InprogressTasks deleteTask = {deleteTask}/>} />} />
+            <Route path="/pending-tasks" element={<PrivateRoutes element={<PendingTasks deleteTask = {deleteTask}/>} />} />
+            <Route path="/completed-tasks" element={<PrivateRoutes element={<CompletedTasks deleteTask = {deleteTask}/>} />} />
             <Route path="/profile" element={<PrivateRoutes element={<Profile />} />} />
             <Route path="/notifications" element={<PrivateRoutes element={<Notifications />} />} />
             <Route path="/logout" element={<PrivateRoutes element={<Logout />} />} />
@@ -396,8 +411,10 @@ export default function App() {
       {layout === "vr" && <Configurator />}
 
       <Routes>
-        {getRoutes(routes)}
-
+        {routes.map((route) => (
+          <Route key={route.key} path={route.route} element={<route.component {...taskCounts} />} />
+        ))}
+        <Route path="/" element={<Dashboard {...taskCounts} />} />
         <Route path="/" element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />} />
 
         <Route path="/login" element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <Login />} />
@@ -405,10 +422,10 @@ export default function App() {
 
         {/* Protected Routes */}
         <Route path="/create-task" element={<PrivateRoutes element={<CreateTask addTask = {addTask}/>} />} />
-        <Route path="/tasks" element={<PrivateRoutes element={<AllTasks />} />} />
-        <Route path="/inprogress-tasks" element={<PrivateRoutes element={<InprogressTasks />} />} />
-        <Route path="/pending-tasks" element={<PrivateRoutes element={<PendingTasks />} />} />
-        <Route path="/completed-tasks" element={<PrivateRoutes element={<CompletedTasks />} />} />  
+        <Route path="/tasks" element={<PrivateRoutes element={<AllTasks deleteTask = {deleteTask}/>} />} />
+        <Route path="/inprogress-tasks" element={<PrivateRoutes element={<InprogressTasks deleteTask = {deleteTask}/>} />} />
+        <Route path="/pending-tasks" element={<PrivateRoutes element={<PendingTasks deleteTask = {deleteTask}/>} />} />
+        <Route path="/completed-tasks" element={<PrivateRoutes element={<CompletedTasks deleteTask = {deleteTask}/>} />} />  
         <Route path="/profile" element={<PrivateRoutes element={<Profile />} />} />
         <Route path="/notifications" element={<PrivateRoutes element={<Notifications />} />} />
         <Route path="/logout" element={<PrivateRoutes element={<Logout />} />} />
