@@ -47,6 +47,11 @@ public class TaskController {
         return taskService.getTasks();
     }
 
+    @GetMapping("/getTasksByStatus")
+    public  List<Task> getTasksByStatus(@RequestParam String status){
+        return taskService.getTasksByStatus(status);
+    }
+
 
     // get task by userId using a raw SQL statement
     @GetMapping("/{userId}")

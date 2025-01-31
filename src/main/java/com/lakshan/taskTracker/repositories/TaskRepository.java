@@ -8,6 +8,7 @@ import java.util.List;
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
-    //    @Lock(LockModeType.OPTIMISTIC_FORCE_INCREMENT)
     List<Task> findByUserId(Long userId);
+
+    List<Task> findByStatus(String status);
 }
