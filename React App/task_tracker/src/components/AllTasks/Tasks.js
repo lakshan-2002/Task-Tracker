@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import "./Tasks.css";
 
-function AllTasks({ deleteTask }) {
+function AllTasks({ updateTask, deleteTask }) {
     const [filter, setFilter] = useState("All");
     const [editTask, setEditTask] = useState(null); // Holds the task being edited
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -47,20 +47,8 @@ function AllTasks({ deleteTask }) {
 
   const handleSave = async () => {
     try {
-      const response = await fetch(`${baseurl}/task/updateTask`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(editTask),
-      });
-      const result = await response.json();
-      if (!response.ok) {
-        throw new Error(result.message || `Error: ${response.statusText}`);
-      }
-      setMessage(result.message);
-      setIsModalOpen(false);
-      // Re-fetch the tasks after update
+      // Send the updated task to the backend
+      await updateTask(updateTask);
       await fetchData();
     } catch (error) {
       setError(error.message);

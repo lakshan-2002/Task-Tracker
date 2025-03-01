@@ -213,7 +213,7 @@ export default function App() {
       if (!response.ok) {
         throw new Error(result.message || `Error: ${response.statusText}`);
       }
-      setSnackbarMessage(result.message);
+      setSnackbarMessage(result.statusDescription);
       setSnackbarSeverity("success");
       setOpenSnackbar(true);
     } catch (error) {
@@ -422,7 +422,7 @@ export default function App() {
 
         {/* Protected Routes */}
         <Route path="/create-task" element={<PrivateRoutes element={<CreateTask addTask = {addTask}/>} />} />
-        <Route path="/tasks" element={<PrivateRoutes element={<AllTasks deleteTask = {deleteTask}/>} />} />
+        <Route path="/tasks" element={<PrivateRoutes element={<AllTasks updateTask = {updateTask} deleteTask = {deleteTask}/>} />} />
         <Route path="/inprogress-tasks" element={<PrivateRoutes element={<InprogressTasks deleteTask = {deleteTask}/>} />} />
         <Route path="/pending-tasks" element={<PrivateRoutes element={<PendingTasks deleteTask = {deleteTask}/>} />} />
         <Route path="/completed-tasks" element={<PrivateRoutes element={<CompletedTasks deleteTask = {deleteTask}/>} />} />  
