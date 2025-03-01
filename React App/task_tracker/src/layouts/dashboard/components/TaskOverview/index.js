@@ -28,15 +28,14 @@ import ChartDataLabels from "chartjs-plugin-datalabels";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-function taskOverview() {
+function taskOverview({ InProgressTasks, PendingTasks, CompletedTasks }) {
   // Define the data for the pie chart
   const chartData = {
     labels: ["In Progress", "Pending", "Completed"],
     datasets: [
       {
-        label: "Task Status",
-        
-        data: [10, 7, 3], // Example data; replace with dynamic values
+        label: "Task Status", 
+        data: [InProgressTasks, PendingTasks, CompletedTasks], // Example data; replace with dynamic values
         backgroundColor: ["Red", "Blue", "#32CD32"],
         borderColor: ["#ffffff"],
         borderWidth: 1,
@@ -50,19 +49,19 @@ function taskOverview() {
       legend: {
         position: "bottom",
       },
-      datalabels: {
-        formatter: (value, context) => {
-          const total = context.dataset.data.reduce((sum, data) => sum + data, 0);
-          const percentage = ((value / total) * 100).toFixed(1);
-          return `${percentage}%`; // Show percentage with 1 decimal point
-        },
-        color: "#ffffff",
-        font: {
-          weight: "bold",
-          size: 18,
-        },
-        display: true,
-      },
+      // datalabels: {
+      //   formatter: (value, context) => {
+      //     // const total = context.dataset.data.reduce((sum, data) => sum + data, 0);
+      //     // const percentage = ((value / total) * 100).toFixed(1);
+      //     // return `${percentage}%`; // Show percentage with 1 decimal point
+      //   },
+      //   color: "#ffffff",
+      //   font: {
+      //     weight: "bold",
+      //     size: 18,
+      //   },
+      //   display: true,
+      // },
     },
   };
 

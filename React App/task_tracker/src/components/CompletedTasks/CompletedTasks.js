@@ -1,16 +1,32 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import "./CompletedTasks.css";
 
-function CompletedTasks() {
+function CompletedTasks({ deleteTask }) {
     const [filter, setFilter] = useState("All");
     const [editTask, setEditTask] = useState(null); // Holds the task being edited
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [tasks, setTasks] = useState([]);
+    const [message, setMessage] = useState(""); // For showing success/error messages
+    const [error, setError] = useState(""); // For error handling
+    
+    const baseurl = "http://localhost:8080";
 
-    const tasks = [
-        { title: "Build Navbar", description: "Implement navbar.", status: "Completed", priority: "High", dueDate: "2025-01-05" },
-        { title: "Create Login Page", description: "Design login page.", status: "Completed", priority: "Medium", dueDate: "2025-01-10" },
-        { title: "Set Up Database", description: "Configure MySQL.", status: "Completed", priority: "Low", dueDate: "2023-12-25" },
-      ];
+    const fetchData = async () => {
+        try {
+          const response = await fetch(`${baseurl}/task/getTasksByStatus?status=Completed`);
+          if (!response.ok) {
+            throw new Error("Failed to fetch tasks");
+          }
+          const result = await response.json();
+          setTasks(result);
+        } catch (error) {
+          setError(error.message);
+        }
+    };
+        
+    useEffect(() => {
+      fetchData(); // Fetch tasks when the component mounts
+    }, []);
 
     const filteredTasks = filter === "All" ? tasks : tasks.filter((task) => task.priority === filter);
 
@@ -32,6 +48,17 @@ function CompletedTasks() {
     // Logic to save the updated task
     console.log("Task saved:", editTask);
     setIsModalOpen(false);
+  };
+
+  const handleDelete = async (taskId) => {
+    if (window.confirm("Are you sure you want to delete this task?")) {
+      try {
+        await deleteTask(taskId);
+        await fetchData(); // Fetch tasks after deleting a task
+      } catch (error) {
+        setError(error.message);
+      }
+    }
   };
 
   const handleChange = (field, value) => {
@@ -59,7 +86,7 @@ function CompletedTasks() {
                 <p className="task-priority">Priority: {task.priority}</p>
                 <p className="task-due-date">Due Date: {task.dueDate}</p>
                 <input type="button" value="Edit" className="task-edit-button" onClick={() => handleEdit(task)}/>
-                <input type="button" value="Delete" className="task-delete-button" />
+                <input type="button" value="Delete" className="task-delete-button" onClick={() => handleDelete(task.id)} />
               </div>
             ))}
           </div>

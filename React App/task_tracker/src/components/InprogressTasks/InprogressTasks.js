@@ -1,20 +1,32 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import "./InprogressTasks.css";
 
-function InprogressTasks() {
+function InprogressTasks({ deleteTask }) {
     const [filter, setFilter] = useState("All");
     const [editTask, setEditTask] = useState(null); // Holds the task being edited
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [tasks, setTasks] = useState([]);
+    const [message, setMessage] = useState(""); // For showing success/error messages
+    const [error, setError] = useState(""); // For error handling
 
-    const tasks = [
-        { title: "Build Navbar", description: "Implement navbar.", status: "In Progress", priority: "High", dueDate: "2025-01-05" },
-        { title: "Create Login Page", description: "Design login page.", status: "In Progress", priority: "Medium", dueDate: "2025-01-10" },
-        { title: "Set Up Database", description: "Configure MySQL.", status: "In Progress", priority: "Low", dueDate: "2023-12-25" },
-        { title: "Implement Authentication", description: "Add authentication logic.", status: "In Progress", priority: "High", dueDate: "2024-01-15" },
-        { title: "Optimize Performance", description: "Improve page load speed.", status: "In Progress", priority: "Medium", dueDate: "2025-01-20" },
-        { title: "Presentation", description: "Communication skills.", status: "In Progress", priority: "Medium", dueDate: "2024-01-25" },
-        { title: "Figma Project", description: "Making a FitEase app.", status: "In Progress", priority: "Low", dueDate: "2024-12-22" },
-      ];
+    const baseurl = "http://localhost:8080";
+
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${baseurl}/task/getTasksByStatus?status=In Progress`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch tasks");
+        }
+        const result = await response.json();
+        setTasks(result);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+    
+    useEffect(() => {
+      fetchData(); // Fetch tasks when the component mounts
+    }, []);
 
     const filteredTasks = filter === "All" ? tasks : tasks.filter((task) => task.priority === filter);
 
@@ -36,6 +48,17 @@ function InprogressTasks() {
     // Logic to save the updated task
     console.log("Task saved:", editTask);
     setIsModalOpen(false);
+  };
+
+  const handleDelete = async (taskId) => {
+    if (window.confirm("Are you sure you want to delete this task?")) {
+      try {
+        await deleteTask(taskId);
+        await fetchData();
+      } catch (error) {
+        setError(error.message);
+      }
+    }
   };
 
   const handleChange = (field, value) => {
@@ -63,7 +86,7 @@ function InprogressTasks() {
                 <p className="task-priority">Priority: {task.priority}</p>
                 <p className="task-due-date">Due Date: {task.dueDate}</p>
                 <input type="button" value="Edit" className="task-edit-button" onClick={() => handleEdit(task)}/>
-                <input type="button" value="Delete" className="task-delete-button" />
+                <input type="button" value="Delete" className="task-delete-button" onClick={() => handleDelete(task.id)} />
               </div>
             ))}
           </div>

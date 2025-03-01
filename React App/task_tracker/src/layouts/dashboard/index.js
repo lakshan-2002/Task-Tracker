@@ -35,7 +35,7 @@ import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 import Projects from "layouts/dashboard/components/Projects";
 import TaskOverview from "layouts/dashboard/components/TaskOverview";
 
-function Dashboard() {
+function Dashboard({ AllTasks, InProgressTasks, PendingTasks, CompletedTasks }) {
   const { sales, tasks } = reportsLineChartData;
 
   return (
@@ -50,7 +50,7 @@ function Dashboard() {
                 title="All Tasks"
                 titleColor="blue"
                 titleFontSize="1.35rem"
-                count={20}
+                count={AllTasks}
                 countColor="blue"
                 percentage={{
                   color: "success",
@@ -66,7 +66,7 @@ function Dashboard() {
                 title="In Progress Tasks"
                 titleColor="red"
                 titleFontSize="1.35rem"
-                count="10"
+                count={InProgressTasks}
                 countColor="red"
                 percentage={{
                   color: "success",
@@ -83,7 +83,7 @@ function Dashboard() {
                 title="Pending Tasks"
                 titleColor="Purple"
                 titleFontSize="1.35rem"
-                count="7"
+                count={PendingTasks}
                 countColor="purple"
                 percentage={{
                   color: "success",
@@ -100,7 +100,7 @@ function Dashboard() {
                 title="Completed Tasks"
                 titleFontSize="1.35rem"
                 titleColor="green"
-                count="3"
+                count={CompletedTasks}
                 countColor="green"
                 percentage={{
                   color: "success",
@@ -155,7 +155,11 @@ function Dashboard() {
               <Projects />
             </Grid>
             <Grid item xs={12} md={6} lg={4}>
-              <TaskOverview />
+              <TaskOverview 
+                InProgressTasks={InProgressTasks}
+                PendingTasks={PendingTasks}
+                CompletedTasks={CompletedTasks}
+              />
             </Grid>
           </Grid>
         </MDBox>

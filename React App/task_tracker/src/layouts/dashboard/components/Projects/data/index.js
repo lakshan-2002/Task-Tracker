@@ -33,6 +33,7 @@ import team1 from "assets/images/team-1.jpg";
 import team2 from "assets/images/team-2.jpg";
 import team3 from "assets/images/team-3.jpg";
 import team4 from "assets/images/team-4.jpg";
+import Projects from "..";
 
 export default function data() {
   const avatars = (members) =>
@@ -60,7 +61,7 @@ export default function data() {
       </Tooltip>
     ));
 
-  const Company = ({ image, name }) => (
+  const Projects = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar src={image} name={name} size="sm" />
       <MDTypography variant="button" fontWeight="medium" ml={1} lineHeight={1}>
@@ -71,7 +72,7 @@ export default function data() {
 
   return {
     columns: [
-      { Header: "companies", accessor: "companies", width: "45%", align: "left" },
+      { Header: "Projects", accessor: "Projects", width: "45%", align: "left" },
       { Header: "members", accessor: "members", width: "10%", align: "left" },
       { Header: "budget", accessor: "budget", align: "center" },
       { Header: "completion", accessor: "completion", align: "center" },
@@ -79,7 +80,7 @@ export default function data() {
 
     rows: [
       {
-        companies: <Company image={logoXD} name="Material UI XD Version" />,
+        Projects: <Projects image={logoXD} name="Material UI XD Version" />,
         members: (
           <MDBox display="flex" py={1}>
             {avatars([
@@ -102,7 +103,7 @@ export default function data() {
         ),
       },
       {
-        companies: <Company image={logoAtlassian} name="Add Progress Track" />,
+        Projects: <Projects image={logoAtlassian} name="Add Progress Track" />,
         members: (
           <MDBox display="flex" py={1}>
             {avatars([
@@ -123,7 +124,7 @@ export default function data() {
         ),
       },
       {
-        companies: <Company image={logoSlack} name="Fix Platform Errors" />,
+        Projects: <Projects image={logoSlack} name="Fix Platform Errors" />,
         members: (
           <MDBox display="flex" py={1}>
             {avatars([
@@ -144,7 +145,7 @@ export default function data() {
         ),
       },
       {
-        companies: <Company image={logoSpotify} name="Launch our Mobile App" />,
+        Projects: <Projects image={logoSpotify} name="Launch our Mobile App" />,
         members: (
           <MDBox display="flex" py={1}>
             {avatars([
@@ -167,7 +168,7 @@ export default function data() {
         ),
       },
       {
-        companies: <Company image={logoJira} name="Add the New Pricing Page" />,
+        Projects: <Projects image={logoJira} name="Add the New Pricing Page" />,
         members: (
           <MDBox display="flex" py={1}>
             {avatars([[team4, "Jessica Doe"]])}
@@ -185,7 +186,7 @@ export default function data() {
         ),
       },
       {
-        companies: <Company image={logoInvesion} name="Redesign New Online Shop" />,
+        Projects: <Projects image={logoInvesion} name="Redesign New Online Shop" />,
         members: (
           <MDBox display="flex" py={1}>
             {avatars([
