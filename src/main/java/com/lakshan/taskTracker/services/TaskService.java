@@ -73,10 +73,12 @@ public class TaskService {
     }
 
     public CommonResponse updateTask(TaskRequest taskRequest) throws Exception {
-        Task task = new Task();
+        Task task = taskRepository.findById(taskRequest.getId()).orElseThrow(
+                () -> new RuntimeException("Task Not Found with id: " + taskRequest.getId()) );
         CommonResponse commonResponse = new CommonResponse();
 
         try {
+            task.setId(taskRequest.getId());
             task.setTitle(taskRequest.getTitle());
             task.setDescription(taskRequest.getDescription());
             task.setStatus(taskRequest.getStatus());
