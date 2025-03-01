@@ -22,6 +22,7 @@ public class TaskResponse implements Serializable {
 
     private User user;
 
+
     public String getTitle() {
         return title;
     }

@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TaskRequest implements Serializable {
+    private Long id;
     private String title;
     private String description;
 
@@ -20,6 +21,10 @@ public class TaskRequest implements Serializable {
     private LocalDate dueDate;
 
     private User user;
+
+    public Long getId() {
+        return id;
+    }
 
     public User getUser() {
         return user;
@@ -65,5 +70,4 @@ public class TaskRequest implements Serializable {
     public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
-
 }
