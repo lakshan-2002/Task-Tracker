@@ -75,10 +75,11 @@ body.show-welcome::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('assets/images/nature image.jpg') no-repeat center center fixed;
+    background: url('assets/images/login 5.avif') no-repeat center center fixed;
     background-size: cover;
-    filter: blur(15px); /* Adjust blur intensity */
+    backdrop-filter: blur(20px); 
     z-index: -1; /* Push it behind the content */
+    
 }
 
 /* Login Box */

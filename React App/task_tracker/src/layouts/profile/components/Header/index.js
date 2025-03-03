@@ -35,7 +35,7 @@ import MDAvatar from "components/MDAvatar";
 import breakpoints from "assets/theme/base/breakpoints";
 
 // Images
-import AlexCosta from "assets/images/Alex Costa.jpg";
+import Lakshan from "assets/images/my picture.png";
 import backgroundImage from "assets/images/bg-profile.jpeg";
 
 function Header({ children }) {
@@ -94,15 +94,15 @@ function Header({ children }) {
       >
         <Grid container spacing={3} alignItems="center">
           <Grid item>
-            <MDAvatar src={AlexCosta} alt="profile-image" size="xl" shadow="sm" />
+            <MDAvatar src={Lakshan} alt="profile-image" size="xl" shadow="sm" />
           </Grid>
           <Grid item>
             <MDBox height="100%" mt={0.5} lineHeight={1}>
               <MDTypography variant="h5" fontWeight="medium">
-                Alex Costa
+                Lakshan Imantha
               </MDTypography>
               <MDTypography variant="button" color="text" fontWeight="regular">
-                Social Medial Influencer | Content Creator
+                University Student
               </MDTypography>
             </MDBox>
           </Grid>

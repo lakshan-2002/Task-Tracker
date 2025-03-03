@@ -423,9 +423,9 @@ export default function App() {
         {/* Protected Routes */}
         <Route path="/create-task" element={<PrivateRoutes element={<CreateTask addTask = {addTask}/>} />} />
         <Route path="/tasks" element={<PrivateRoutes element={<AllTasks updateTask = {updateTask} deleteTask = {deleteTask}/>} />} />
-        <Route path="/inprogress-tasks" element={<PrivateRoutes element={<InprogressTasks deleteTask = {deleteTask}/>} />} />
-        <Route path="/pending-tasks" element={<PrivateRoutes element={<PendingTasks deleteTask = {deleteTask}/>} />} />
-        <Route path="/completed-tasks" element={<PrivateRoutes element={<CompletedTasks deleteTask = {deleteTask}/>} />} />  
+        <Route path="/inprogress-tasks" element={<PrivateRoutes element={<InprogressTasks updateTask = {updateTask} deleteTask = {deleteTask}/>} />} />
+        <Route path="/pending-tasks" element={<PrivateRoutes element={<PendingTasks updateTask = {updateTask} deleteTask = {deleteTask}/>} />} />
+        <Route path="/completed-tasks" element={<PrivateRoutes element={<CompletedTasks updateTask = {updateTask} deleteTask = {deleteTask}/>} />} />  
         <Route path="/profile" element={<PrivateRoutes element={<Profile />} />} />
         <Route path="/notifications" element={<PrivateRoutes element={<Notifications />} />} />
         <Route path="/logout" element={<PrivateRoutes element={<Logout />} />} />
