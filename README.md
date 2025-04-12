@@ -4,7 +4,7 @@ Task Management System is a web application designed to help individuals and tea
 Additionally, users can set deadlines, prioritize tasks and track their progress on various tasks ensuring better time management.
 
 # Tech Stack
-Frontend - ReactJS
-Backend - Spring boot, Java
-Database - MYSQL
+Frontend - ReactJS <br>
+Backend - Spring boot, Java <br>
+Database - MYSQL <br>
 
