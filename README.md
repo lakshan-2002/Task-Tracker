@@ -8,6 +8,7 @@ Additionally, users can set deadlines, prioritize tasks and track their progress
 * Backend - Spring boot, Java <br>
 + Database - MySQL <br>
 
+
 ## Build locally
 ### Prerequisites
 - Java 17 or later
@@ -37,10 +38,6 @@ To start the app, run:
  ~~~
   yarn start
  ~~~
-
-# Screenshots
-
-![dashboard](screenshots/shot-dashboard.png)
 
 
 
