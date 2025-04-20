@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import "./PendingTasks.css";
 
-function PendingTasks({ deleteTask}) {
+function PendingTasks({ updateTask, deleteTask}) {
     const [filter, setFilter] = useState("All");
     const [editTask, setEditTask] = useState(null); // Holds the task being edited
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -44,10 +44,27 @@ function PendingTasks({ deleteTask}) {
     setIsModalOpen(false);
   };
 
-  const handleSave = () => {
-    // Logic to save the updated task
-    console.log("Task saved:", editTask);
-    setIsModalOpen(false);
+  const handleSave = async () => {
+    try {
+      if (!editTask) return;
+
+      // Use the updateTask function from props
+      const updateResponse = await updateTask(editTask);
+
+      if (!updateResponse || !updateResponse.success) {
+          throw new Error("Failed to update task");
+      }
+
+      // Update the state locally
+      setTasks((prevTasks) =>
+          prevTasks.map((task) =>
+              task.id === editTask.id ? editTask : task
+          )
+      );
+    } catch (error) {
+      // Handle any errors that occur during the process
+      setError(error.message || 'An error occurred');
+    }
   };
 
   const handleDelete = async (taskId) => {
@@ -95,6 +112,13 @@ function PendingTasks({ deleteTask}) {
             <div className="modal-content">
               <h3 align = "center">Edit Task</h3>
               <form>
+              <label>ID:</label>
+                <input
+                  type="text"
+                  value={editTask.id}
+                  readOnly className="readonly-input"// Make it non-editable
+                />
+
                 <label>Title:</label>
                 <input
                   type="text"

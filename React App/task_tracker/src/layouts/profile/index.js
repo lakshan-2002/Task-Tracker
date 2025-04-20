@@ -19,7 +19,7 @@ import Divider from "@mui/material/Divider";
 
 // @mui icons
 import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import InstagramIcon from "@mui/icons-material/Instagram";
 
 // Material Dashboard 2 React components
@@ -66,28 +66,23 @@ function Overview() {
               <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
               <ProfileInfoCard
                 title="profile information"
-                description="Hi, I’m Alex. I'm a social medial influencer and a content creator. My goal is to guide you to reach your full potential with videos on improving your self-image through fashion, hairstyle tutorials."
+                description="Hi, I’m Lakshan. I'm a computer engineering student at Faculty of Engineering, University of Ruhuna. I am passionate about backend development and I love to work with java and spring boot."
                 info={{
-                  fullName: "Alex Costa",
-                  mobile: "(44) 341 5637 243",
-                  email: "alexcosta@gmail.com",
-                  location: "USA",
+                  fullName: "Lakshan Imantha",
+                  mobile: "070-2294900",
+                  email: "lakshan.imantha02@gmail.com",
+                  location: "Sri Lanka",
                 }}
                 social={[
                   {
-                    link: "https://www.facebook.com/CreativeTim/",
+                    link: "https://web.facebook.com/profile.php?id=100084741662109",
                     icon: <FacebookIcon />,
                     color: "facebook",
                   },
                   {
-                    link: "https://twitter.com/creativetim",
-                    icon: <TwitterIcon />,
-                    color: "twitter",
-                  },
-                  {
-                    link: "https://www.instagram.com/creativetimofficial/",
-                    icon: <InstagramIcon />,
-                    color: "instagram",
+                    link: "https://www.linkedin.com/in/lakshan-imantha-93a95928b/",
+                    icon: <LinkedInIcon />,
+                    color: "linkedin",
                   },
                 ]}
                 action={{ route: "", tooltip: "Edit Profile" }}
