@@ -1,2 +1,6 @@
 /mvnw text eol=lf
 *.cmd text eol=crlf
+
+# Detect languages in nested folders
+src/** linguist-detectable=true
+React App/** linguist-detectable=true
