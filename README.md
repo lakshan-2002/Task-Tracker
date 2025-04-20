@@ -9,7 +9,10 @@ Additionally, users can set deadlines, prioritize tasks and track their progress
 + Database - MySQL <br>
 
 ## Installation
-git clone 
+1. Clone the repository
+ ~~~
+  git clone https://github.com/lakshan-2002/Task-Tracker.git
+ ~~~
 
 
 
